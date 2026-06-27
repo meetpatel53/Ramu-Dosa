@@ -1,0 +1,215 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ramu Dosa Wala — Menu</title>
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#071020; --bg2:#081623;
+  --muted:#cbd5e1; --gold:#d4af37;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Roboto,Arial;color:#fff;background:linear-gradient(160deg,var(--bg1),var(--bg2));-webkit-font-smoothing:antialiased;}
+.site-header{max-width:1200px;margin:18px auto 8px;padding:0 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.brand h1{margin:0;font-family:'Playfair Display',serif;color:var(--gold);font-size:22px;}
+.brand small{display:block;color:var(--muted);}
+.top-cats-wrap{position:sticky;top:0;z-index:140;backdrop-filter: blur(6px);background: linear-gradient(180deg, rgba(3,6,10,0.85), rgba(3,6,10,0.75));border-bottom:1px solid rgba(255,255,255,0.02);padding:8px 0;}
+.top-cats{max-width:1200px;margin:0 auto;padding:6px 18px;display:flex;gap:12px;align-items:center;overflow:auto;-webkit-overflow-scrolling:touch;}
+.cat-btn{background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:700;white-space:nowrap;transition: transform .22s, box-shadow .22s, background .22s, color .22s;}
+.cat-btn.active{background: linear-gradient(90deg, rgba(212,175,55,0.16), rgba(255,215,128,0.12));color:#08121a;transform:translateY(-6px) scale(1.02);box-shadow:0 18px 50px rgba(212,175,55,0.08);animation:activePulse 3s ease-in-out infinite;}
+@keyframes activePulse{0%{box-shadow:0 12px 40px rgba(212,175,55,0.06);}50%{box-shadow:0 20px 60px rgba(212,175,55,0.09);}100%{box-shadow:0 12px 40px rgba(212,175,55,0.06);}}
+.page{max-width:1200px;margin:12px auto 96px;padding:0 18px;display:grid;grid-template-columns:1fr 360px;gap:18px;}
+@media(max-width:1099px){.page{grid-template-columns:1fr;padding-bottom:140px;}}
+.food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;}
+.card{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 30px rgba(0,0,0,0.55);display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s;}
+.card:hover{transform:translateY(-8px);box-shadow:0 26px 70px rgba(0,0,0,0.66);}
+.card-media{height:150px;overflow:hidden;}
+.card-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s;}
+.card:hover .card-media img{transform:scale(1.06) translateY(-6px);}
+.card-body{padding:12px;display:flex;flex-direction:column;gap:8px;}
+.title-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.title-row h3{margin:0;font-family:'Playfair Display',serif;font-size:16px;}
+.muted{color:var(--muted);font-size:13px;}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;}
+.price{color:var(--gold);font-weight:800;min-width:64px;}
+.qty{display:flex;align-items:center;gap:8px;background:rgba(0,0,0,0.18);padding:6px;border-radius:10px;}
+.qty button{background:#0e1620;color:#fff;border:none;padding:6px 8px;border-radius:8px;cursor:pointer;font-weight:800;}
+.qty-num{min-width:28px;text-align:center;font-weight:800;color:var(--muted);}
+.add-btn{background:linear-gradient(90deg,var(--gold),#ffd78f);color:#08121a;border:none;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:800;}
+.cart{position:sticky;top:84px;align-self:start;background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 14px 40px rgba(0,0,0,0.6);height:fit-content;}
+.cart h4{margin:0 0 10px;color:var(--gold);}
+.cart-items{display:flex;flex-direction:column;gap:10px;max-height:360px;overflow:auto;padding-right:6px;}
+.cart-item{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:8px;border-radius:8px;background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(255,255,255,0.01));}
+.cart-total{margin-top:12px;font-weight:800;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="brand">
+    <h1>Ramu Dosa Wala</h1>
+    <small class="muted">Tap a category to filter — orders sent to kitchen</small>
+  </div>
+</header>
+
+<div class="top-cats-wrap">
+  <div class="top-cats" id="topCats"></div>
+</div>
+
+<main class="page">
+  <section class="grid-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <h2 style="margin:0;color:var(--gold)">Menu</h2>
+      <div id="currentFilter" class="muted">Showing: All</div>
+    </div>
+    <div id="grid" class="food-grid"></div>
+  </section>
+
+  <aside class="cart">
+    <h4>Your Order</h4>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-total">Total: ₹ <span id="cartTotal">0</span></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button id="btnClear" class="add-btn" style="background:#2b2f33;color:#fff">Clear</button>
+      <button id="btnCheckout" class="add-btn">Checkout</button>
+    </div>
+  </aside>
+</main>
+
+<script src="./app.js">
+const CATEGORIES = ['All','Uttapam','Dosa','Chinese','Extras'];
+const ITEMS = [
+  {name:'Plain Uttapam',price:70,cat:'Uttapam',img:'https://images.unsplash.com/photo-1543353071-873f17a7a088?auto=format&fit=crop&w=1200&q=80'},
+  {name:'Butter Plain Uttapam',price:78,cat:'Uttapam',img:'https://images.unsplash.com/photo-1604908177522-6f6a5a1d0e27?auto=format&fit=crop&w=1200&q=80'},
+  {name:'Masala Dosa',price:100,cat:'Dosa',img:'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1200&q=80'},
+  {name:'Plain Dosa',price:90,cat:'Dosa',img:'https://images.unsplash.com/photo-1512058564366-c9e3f3ef0d8e?auto=format&fit=crop&w=1200&q=80'},
+  {name:'Veg Hakka Noodles',price:70,cat:'Chinese',img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80'},
+  {name:'Extra Cheese',price:50,cat:'Extras',img:'https://images.unsplash.com/photo-1498579809087-ef1e558fd1fb?auto=format&fit=crop&w=1200&q=80'}
+];
+
+let cart = {};
+const topCatsEl = document.getElementById('topCats');
+const gridEl = document.getElementById('grid');
+const currentFilterEl = document.getElementById('currentFilter');
+const cartItemsEl = document.getElementById('cartItems');
+const cartTotalEl = document.getElementById('cartTotal');
+
+function escapeHtml(str){ return String(str).replace(/[&<>"'`=\/]/g, s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','/':'&#x2F;','`':'&#x60;','=':'&#61;'})[s]); }
+
+CATEGORIES.forEach(cat=>{
+  const btn=document.createElement('button');
+  btn.className='cat-btn';
+  btn.textContent=cat;
+  btn.dataset.cat=cat;
+  btn.addEventListener('click',()=>selectCategory(cat));
+  topCatsEl.appendChild(btn);
+});
+
+let activeCategory='All';
+function selectCategory(cat){
+  activeCategory=cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.cat-btn[data-cat="${cat}"]`).classList.add('active');
+  currentFilterEl.textContent='Showing: '+cat;
+  renderGrid();
+}
+
+function renderGrid(){
+  gridEl.innerHTML='';
+  const filtered=activeCategory==='All'?ITEMS:ITEMS.filter(i=>i.cat===activeCategory);
+  filtered.forEach(item=>{
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML=`
+      <div class="card-media"><img src="${item.img}" alt="${escapeHtml(item.name)}"></div>
+      <div class="card-body">
+        <div class="title-row"><h3>${escapeHtml(item.name)}</h3><div class="price">₹${item.price}</div></div>
+        <div class="muted">${escapeHtml(item.cat)}</div>
+        <div class="controls">
+          <div class="qty">
+            <button class="dec">-</button>
+            <div class="qty-num">1</div>
+            <button class="inc">+</button>
+          </div>
+          <button class="add-btn">Add</button>
+        </div>
+      </div>
+    `;
+    const dec=card.querySelector('.dec'),inc=card.querySelector('.inc'),qnum=card.querySelector('.qty-num');
+    dec.addEventListener('click',()=>qnum.textContent=Math.max(1,parseInt(qnum.textContent)-1));
+    inc.addEventListener('click',()=>qnum.textContent=parseInt(qnum.textContent)+1);
+    card.querySelector('.add-btn').addEventListener('click',()=>{ addToCart(item,parseInt(qnum.textContent)); qnum.textContent='1'; });
+    gridEl.appendChild(card);
+  });
+}
+
+function addToCart(item,qty){
+  if(cart[item.name]) cart[item.name].qty+=qty;
+  else cart[item.name]={...item,qty};
+  renderCart();
+}
+
+function renderCart(){
+  cartItemsEl.innerHTML='';
+  let total=0;
+  Object.values(cart).forEach(ci=>{
+    total+=ci.price*ci.qty;
+    const div=document.createElement('div'); div.className='cart-item';
+    div.innerHTML=`
+      <div>
+        <div style="font-weight:700">${escapeHtml(ci.name)}</div>
+        <div class="muted">₹${ci.price} each</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="cart-dec" data-name="${escapeHtml(ci.name)}">-</button>
+        <div class="muted">${ci.qty}</div>
+        <button class="cart-inc" data-name="${escapeHtml(ci.name)}">+</button>
+      </div>
+      <div style="min-width:64px;text-align:right"><strong>₹${ci.price*ci.qty}</strong></div>
+    `;
+    cartItemsEl.appendChild(div);
+  });
+  cartTotalEl.textContent=total;
+
+  cartItemsEl.querySelectorAll('.cart-inc').forEach(b=>b.addEventListener('click',e=>{
+    const n=e.currentTarget.dataset.name;
+    if(cart[n]){ cart[n].qty++; renderCart(); }
+  }));
+  cartItemsEl.querySelectorAll('.cart-dec').forEach(b=>b.addEventListener('click',e=>{
+    const n=e.currentTarget.dataset.name;
+    if(cart[n]){ cart[n].qty--; if(cart[n].qty<=0) delete cart[n]; renderCart(); }
+  }));
+}
+
+document.getElementById('btnClear').addEventListener('click',()=>{ cart={}; renderCart(); });
+
+document.getElementById('btnCheckout').addEventListener('click',()=>{
+  if(Object.keys(cart).length===0){ alert('Cart is empty'); return; }
+  const payload = {
+    name: prompt("Enter your name:",""),
+    phone: prompt("Enter your phone:",""),
+    cart: Object.values(cart).map(i=>({name:i.name,qty:i.qty,price:i.price}))
+  };
+  if(!payload.name || !payload.phone){ alert('Name and phone required'); return; }
+  fetch('http://localhost:3000/api/order',{   // <-- Node server
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  })
+  .then(r=>r.json())
+  .then(res=>{
+    if(res.status==='success'){ alert('Order sent! ID: '+res.order_id); cart={}; renderCart(); }
+    else alert('Error: '+res.message);
+  })
+  .catch(e=>alert('Error sending order: '+e.message));
+});
+
+selectCategory('All');
+renderGrid();
+</script>
+</body>
+</html>

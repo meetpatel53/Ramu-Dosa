@@ -1,0 +1,223 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top right, #ffffff, var(--bg-dark));
+  padding: 20px;
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 3rem 2.5rem;
+  border-radius: 32px;
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+}
+
+.login-header h1 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.brand-name {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.login-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: rgba(15, 23, 42, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+  border-color: var(--primary);
+  background: rgba(15, 23, 42, 0.04);
+  box-shadow: 0 0 0 4px rgba(255, 85, 0, 0.1);
+}
+
+.input-icon {
+  color: var(--primary);
+  margin-right: 12px;
+  font-size: 1.2rem;
+}
+
+.input-group input {
+  background: none;
+  border: none;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  width: 100%;
+  padding: 0.8rem 0;
+  font-weight: 500;
+}
+
+.input-group input:focus {
+  outline: none;
+}
+
+.otp-group {
+  justify-content: center;
+}
+
+.otp-input {
+  text-align: center !important;
+  font-size: 2rem !important;
+  letter-spacing: 12px;
+  font-weight: 700 !important;
+  font-family: monospace;
+}
+
+.error-msg {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.success-msg {
+  color: #10b981;
+  font-size: 0.85rem;
+  margin-top: -0.5rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+.dev-otp-banner {
+  background: rgba(255, 85, 0, 0.05);
+  border: 1px dashed rgba(255, 85, 0, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  margin-top: -0.5rem;
+}
+
+.dev-otp-code {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 2px;
+  background: rgba(15, 23, 42, 0.03);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  margin-top: 0.25rem;
+}
+
+.login-btn {
+  background: var(--primary);
+  color: #ffffff;
+  border: none;
+  padding: 1.2rem;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(255, 85, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+}
+
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(255, 85, 0, 0.25);
+  filter: brightness(1.1);
+}
+
+.login-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.back-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  padding: 0.5rem;
+  margin-top: -0.5rem;
+}
+
+.back-btn:hover {
+  color: var(--text-main);
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.login-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.login-footer p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 2rem 1.5rem;
+    border-radius: 24px;
+  }
+  .brand-name {
+    font-size: 2.2rem;
+  }
+}
